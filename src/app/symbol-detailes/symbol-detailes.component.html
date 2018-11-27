@@ -1,0 +1,67 @@
+<!--<h1 style="padding: 10px" *ngIf="myList.length === 0"> در حال بارگذاری ... </h1>-->
+<div dir="rtl">
+<div class="spinner-container" *ngIf="myList.length === 0">
+  <mat-progress-spinner style="margin:0 auto; position:fixed;top:40%;left:45%;right:50%;bottom: 50% " mode="indeterminate"  color="accent"></mat-progress-spinner>
+</div>
+<div *ngIf="myList.length != 0">
+<!--<button mat-stroked-button (click)="back()"><- بازگشت</button>-->
+
+  <button style="margin-right: 15px" mat-raised-button (click)="back()"  color="primary">
+    <mat-icon>chevron_right</mat-icon>
+    بازگشت
+  </button>
+<div  class="details-container">
+  <!--<div  class="details-container">-->
+
+  <ul>
+    LVal18AFC: {{ myList.LVal18AFC }}
+  </ul>
+  <ul>
+    LVal30: {{ myList.LVal30 }}
+  </ul>
+  <ul>
+    BaseVol:{{ myList.BaseVol }}
+  </ul>
+  <ul>
+    CIsin: {{ myList.CIsin }}
+  </ul>
+  <ul>
+    EPS: {{ myList.EPS }}
+  </ul>
+  <ul>
+    InsCode: {{ myList.InsCode }}
+  </ul>
+
+  <ul>
+    PClosing: {{ myList.PClosing }}
+  </ul>
+  <ul>
+    PDrCotVal: {{ myList.PDrCotVal }}
+  </ul>
+  <ul>
+    PriceFirst: {{ myList.PriceFirst }}
+  </ul>
+  <ul>
+    PriceMax: {{ myList.PriceMax }}
+  </ul>
+  <ul>
+    PriceMin: {{ myList.PriceMin }}
+  </ul>
+  <ul>
+    PriceYesterday: {{ myList.PriceYesterday }}
+  </ul>
+  <ul>
+    QTotCap: {{ myList.QTotCap }}
+  </ul>
+  <ul>
+    QTotTran5J: {{ myList.QTotTran5J }}
+  </ul>
+  <ul>
+    YVal: {{ myList.YVal }}
+  </ul>
+  <ul>
+    ZTotTran: {{ myList.ZTotTran }}
+  </ul>
+</div>
+</div>
+</div>

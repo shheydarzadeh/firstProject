@@ -1,0 +1,268 @@
+<div class="mat-typography">
+<div dir="rtl"  class="course">
+
+    <div class="spinner-container" *ngIf="myList.length === 0">
+      <mat-progress-spinner style="margin:0 auto; position:fixed;top:45%;left:45%;right:50%;bottom: 50% " mode="indeterminate"  color="accent"></mat-progress-spinner>
+
+    </div>
+
+  <mat-sidenav-container class="example-container" >
+    <mat-sidenav style="min-width: 100px" opened mode="side">
+      <mat-toolbar color="primary">
+        <mat-toolbar-row>
+          <span>منو</span>
+          <button  style="margin-right: 15px" mat-button (click)=wichContent()  >
+            <mat-icon>chevron_left</mat-icon>
+          </button>
+        </mat-toolbar-row>
+      </mat-toolbar>
+      <mat-list>
+        <mat-list-item>آیتم 1</mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>آیتم 2</mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>آیتم 3</mat-list-item>
+      </mat-list>
+    </mat-sidenav>
+    <mat-sidenav #drawer [opened]=is_open  mode="side" position="end">
+      <mat-toolbar color="primary">
+        <mat-toolbar-row>
+          <span>جزئیات</span>
+          <!--<button  style="margin-right: 15px" mat-button (click)="drawer.toggle()"  >-->
+          <button  style="margin-right: 15px" mat-button (click)=closeSidenav()  >
+            <mat-icon>chevron_left</mat-icon>
+          </button>
+        </mat-toolbar-row>
+      </mat-toolbar>
+
+      <div dir="rtl">
+        <div class="spinner-container" *ngIf="myDetaileList.length === 0">
+          <mat-progress-spinner style="margin:0 auto; position:fixed;top:40%;left:5% " mode="indeterminate"  color="accent"></mat-progress-spinner>
+        </div>
+        <div *ngIf="myDetaileList.length != 0">
+
+          <div  class="details-container">
+
+            <ul>
+              LVal18AFC: {{ myDetaileList.LVal18AFC }}
+              <br>
+              LVal30: {{ myDetaileList.LVal30 }}
+              <br>
+              BaseVol:{{ myDetaileList.BaseVol }}
+              <br>
+              CIsin: {{ myDetaileList.CIsin }}
+              <br>
+              EPS: {{ myDetaileList.EPS }}
+              <br>
+              InsCode: {{ myDetaileList.InsCode }}
+              <br>
+              PClosing: {{ myDetaileList.PClosing }}
+              <br>
+              PDrCotVal: {{ myDetaileList.PDrCotVal }}
+              <br>
+              PriceFirst: {{ myDetaileList.PriceFirst }}
+              <br>
+              PriceMax: {{ myDetaileList.PriceMax }}
+              <br>
+              PriceMin: {{ myDetaileList.PriceMin }}
+              <br>
+              PriceYesterday: {{ myDetaileList.PriceYesterday }}
+              <br>
+              QTotCap: {{ myDetaileList.QTotCap }}
+              <br>
+              QTotTran5J: {{ myDetaileList.QTotTran5J }}
+              <br>
+              YVal: {{ myDetaileList.YVal }}
+              <br>
+              ZTotTran: {{ myDetaileList.ZTotTran }}
+            </ul>
+          </div>
+        </div>
+      </div>
+
+
+    </mat-sidenav>
+    <!--main_content-->
+    <div  *ngIf="showMain" style="min-width: 700px">
+    <mat-toolbar color="primary" >
+      <mat-toolbar-row>
+      <span>
+         <mat-form-field >
+         <input  matInput (keyup)="applyFilter($event.target.value) " placeholder="جستجو">
+         </mat-form-field>
+      </span>
+        <!--<span>-->
+          <!--<button style="margin-left: 2px;margin-right: 2px ;font-family: IRANSans" mat-button [routerLink]="['Compaire']" >مرتب سازی</button>-->
+        <!--</span>-->
+        <!--<span><button style="margin-left: 2px;margin-right: 2px" mat-button [routerLink]="['Compaire']" >مقایسه موارد انتخاب شده</button> </span>-->
+        <span><button style="margin-left: 2px;margin-right: 2px" mat-button (click)="showCompare()"  >مقایسه موارد انتخاب شده</button> </span>
+      </mat-toolbar-row>
+
+    </mat-toolbar>
+
+      <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" style="width: 100%">
+
+        <ng-container matColumnDef="select">
+        <th mat-header-cell *matHeaderCellDef>
+        <!--<mat-checkbox (change)="$event ? masterToggle() : null"-->
+        <!--[checked]="selection.hasValue() && isAllSelected()"-->
+        <!--[indeterminate]="selection.hasValue() && !isAllSelected()">-->
+        <!--</mat-checkbox>-->
+        </th>
+        <td mat-cell *matCellDef="let row">
+        <mat-checkbox (click)="$event.stopPropagation()"
+        (change)="$event ? selection.toggle(row) : null ; setForCheck($event,row.Id)"
+        [checked]="selection.isSelected(row)">
+        </mat-checkbox>
+        </td>
+        </ng-container>
+
+
+        <ng-container matColumnDef="Id">
+          <th mat-header-cell *matHeaderCellDef  > ردیف </th>
+          <!--<td mat-cell *matCellDef="let element"> {{element.Id}} </td>-->
+          <td mat-cell *matCellDef="let element"> {{(dataSource.filteredData.indexOf(element))+1}} </td>
+        </ng-container>
+
+
+        <ng-container matColumnDef="Name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> نام </th>
+          <td mat-cell *matCellDef="let element"> {{element.Name}} </td>
+        </ng-container>
+
+
+        <ng-container matColumnDef="Title">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> عنوان </th>
+          <td mat-cell *matCellDef="let element"> {{element.Title}} </td>
+        </ng-container>
+
+
+        <ng-container matColumnDef="InsCode">
+          <th mat-header-cell *matHeaderCellDef > کد </th>
+          <td mat-cell *matCellDef="let element"> {{element.InsCode}} </td>
+        </ng-container>
+        <ng-container  matColumnDef="goDetaile"  >
+          <th mat-header-cell  *matHeaderCellDef >  </th>
+          <td mat-cell style="padding-left: 0px" *matCellDef="let element">
+            <!--<button  mat-button [routerLink]="['/details', element.Id]" color="primary">-->
+            <button  mat-button (click)="showDetaile(element.Id)" color="primary">
+              مشاهده جزئیات
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+      <mat-paginator [length]="100"
+      [pageSize]="5"
+      [pageSizeOptions]="[5, 10, 25, 100]">
+      </mat-paginator>
+
+    </div>
+    <!--other conteny-->
+    <div *ngIf="!showMain">
+      <p>other content</p>
+    </div>
+  </mat-sidenav-container>
+
+</div>
+
+
+
+<div dir="rtl">
+  <div #modal id="myModal" class="modal">
+    <div class="spinner-container" *ngIf="chosedItem.length != myCopmareList.length">
+      <mat-progress-spinner style="margin:0 auto; position:fixed;top:45%;left:45%;right:50%;bottom: 50% " mode="indeterminate"  color="accent"></mat-progress-spinner>
+
+    </div>
+    <div class="modal-content">
+      <mat-toolbar color="primary">
+          <mat-toolbar-row>
+          <span class="close" (click)="closeModal()">&times;</span>
+          <span style="margin-right: 5px">مقایسه</span>
+          </mat-toolbar-row>
+      </mat-toolbar>
+        <!--<div  fxLayout="row wrap" fxLayoutGap="32px" fxLayoutAlign="flex-start">-->
+        <div  fxLayout="row wrap"
+              fxLayout.lt-sm="column"
+              fxLayoutGap="32px"
+              fxLayoutAlign="flex-start">
+          <ng-container *ngFor="let item of myCopmareList">
+            <!--<ng-container *ngFor="let _ of [1,2,3,4,5,6,7,8,9,10]">-->
+            <!--<mat-card fxFlex="0 1 calc(33.3% - 32px)">-->
+            <mat-card   fxFlex="0 1 calc(33.3% - 32px)"
+                        fxFlex.lt-md="0 1 calc(50% - 32px)"
+                        fxFlex.lt-sm="100%">
+              <mat-card-header >
+                <!--<div mat-card-avatar class="example-header-image"></div>-->
+
+                <mat-card-title >	{{ item.LVal30 }}</mat-card-title>
+                <mat-card-subtitle>{{ item.LVal18AFC }}</mat-card-subtitle>
+              </mat-card-header>
+              <!--<img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">-->
+              <mat-card-content>
+                <div >
+
+                  <ul>
+                    LVal18AFC: {{ item.LVal18AFC }}
+                    <br>
+                    LVal30: {{ item.LVal30 }}
+                    <br>
+                    BaseVol:{{ item.BaseVol }}
+                    <br>
+                    CIsin: {{ item.CIsin }}
+                    <br>
+                    EPS: {{ item.EPS }}
+                    <br>
+                    InsCode: {{ item.InsCode }}
+                    <br>
+                    PClosing: {{ item.PClosing }}
+                    <br>
+                    PDrCotVal: {{ item.PDrCotVal }}
+                    <br>
+                    PriceFirst: {{ item.PriceFirst }}
+                    <br>
+                    PriceMax: {{ item.PriceMax }}
+                    <br>
+                    PriceMin: {{ item.PriceMin }}
+                    <br>
+                    PriceYesterday: {{ item.PriceYesterday }}
+                    <br>
+                    QTotCap: {{ item.QTotCap }}
+                    <br>
+                    QTotTran5J: {{ item.QTotTran5J }}
+                    <br>
+                    YVal: {{ item.YVal }}
+                    <br>
+                    ZTotTran: {{ item.ZTotTran }}
+                  </ul>
+                </div>
+              </mat-card-content>
+              <mat-card-actions>
+                <button mat-button color="accent">ویرایش <mat-icon>mode_edit</mat-icon></button>
+                <button mat-button color="accent">حذف<mat-icon>delete</mat-icon></button>
+              </mat-card-actions>
+            </mat-card>
+          </ng-container>
+        </div>
+
+        <!--<mat-card class="card-picture" *ngFor="let picture of pictures">-->
+        <!--<mat-card-title fxLayout.gt-xs="row" fxLayout.xs="column">-->
+        <!--<span fxFlex="80%">{{picture.title}}</span>-->
+        <!--<mat-icon fxFlex="10%">mode_edit</mat-icon>-->
+        <!--<mat-icon fxFlex="10%">delete</mat-icon>-->
+        <!--</mat-card-title>-->
+        <!--<img mat-card-image [src]="picture.img">-->
+        <!--</mat-card>-->
+
+      </div>
+
+    </div>
+  </div>
+
+
+  </div>
+
+
+

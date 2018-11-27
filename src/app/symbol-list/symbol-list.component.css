@@ -1,0 +1,45 @@
+.example-full-width {
+  width: 100%;
+}
+table {
+  width: 100%;
+}
+/*.mat-header-cell {*/
+/*text-align: right;*/
+/*}*/
+.th.mat-header-cell {
+  text-align: right;
+}
+.mat-cell{
+  padding: 20px;
+}
+
+
+
+textarea,
+button,
+select,
+input {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+/*.right.mat-cell {*/
+  /*display: flex;*/
+  /*justify-content: flex-end;*/
+/*}*/
+/*.right.mat-header-cell {*/
+  /*display: flex;*/
+  /*justify-content: flex-end;*/
+  /*padding-right: 0;*/
+  /*padding-left: 24px;*/
+/*}*/
+/*.right.mat-header-cell:last-child {*/
+  /*margin-right: 0;*/
+/*}*/
+
+/*.mat-column- {*/
+  /*display: flex;*/
+  /*justify-content: flex-end;*/
+/*}*/
